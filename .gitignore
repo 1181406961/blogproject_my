@@ -15,4 +15,5 @@ uwsgi.pid
 db.sqlite3
 blogproject/settings_prd.py
 manage_prd.py
+prd_wsgi.py
 
