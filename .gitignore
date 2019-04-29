@@ -1,0 +1,14 @@
+### Django ###
+*.log
+__pycache__/
+.DS_Store
+*.DS_Store
+.idea/*
+*.pyc
+media/
+uwsgi.ini
+whoosh_index/
+static/admin
+uwsgi_params
+uwsgi.pid
+db.sqlite3
