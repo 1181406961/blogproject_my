@@ -2,9 +2,9 @@ from django.contrib.syndication.views import Feed
 from .models import Post
 
 class AllPostsRssFeed(Feed):
-    title = 'Django博客教程演示项目'
+    title = '俊伟的博客'
     link  = '/'
-    description = "Django博客教程演示项目文章"
+    description = "俊伟的博客"
     def items(self):
         return Post.objects.all()
 
