@@ -12,3 +12,6 @@ static/admin
 uwsgi_params
 uwsgi.pid
 db.sqlite3
+blogproject/settings_prd.py
+manage_prd.py
+
