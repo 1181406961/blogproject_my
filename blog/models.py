@@ -1,14 +1,15 @@
 from django.db import models
-from django.contrib.auth.models import User#自带模型类
+from django.contrib.auth.models import User
 from django.urls import reverse
-import markdown
-from django.utils.html import strip_tags
-# from users.models import User
-# Create your models here.
+from ckeditor_uploader.fields import RichTextUploadingField
+
+
 class Category(models.Model):
     name = models.CharField(max_length=64)
+
     def __str__(self):
         return self.name
+
 
 class Tag(models.Model):
     name = models.CharField(max_length=64)
@@ -16,33 +17,23 @@ class Tag(models.Model):
     def __str__(self):
         return self.name
 
+
 class Post(models.Model):
     title = models.CharField(max_length=64)
-    body = models.TextField()
+    body = RichTextUploadingField()
     created_time = models.DateTimeField()
     modified_time = models.DateTimeField()
-    excerpt = models.CharField(max_length=256,blank=True)
-    #关系
     category = models.ForeignKey(Category)
-    tags = models.ManyToManyField(Tag,blank=True)
+    tags = models.ManyToManyField(Tag, blank=True)
     author = models.ForeignKey(User)
     views = models.PositiveIntegerField(default=0)
 
     def increase_views(self):
-        self.views +=1
+        self.views += 1
         self.save(update_fields=['views'])
 
     def get_absolute_url(self):
-        return reverse('blog:detail',kwargs={'pk':self.pk})
-
-    def save(self, *args,**kwargs):
-        if not self.excerpt:
-            md = markdown.Markdown(extensions=[
-                'markdown.extensions.extra',
-                'markdown.extensions.codehilite',
-            ])
-            self.excerpt = strip_tags(md.convert(self.body))[:54]
-            super().save(*args,**kwargs)
+        return reverse('blog:detail', kwargs={'pk': self.pk})
 
     def __str__(self):
         return self.title
