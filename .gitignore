@@ -9,7 +9,7 @@ __pycache__/
 media/
 uwsgi.ini
 whoosh_index/
-static/admin
+static/
 uwsgi_params
 uwsgi.pid
 db.sqlite3

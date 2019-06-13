@@ -11,8 +11,13 @@ class IndexView(ListView):
     context_object_name = 'post_list'
     paginate_by = 1
 
-    def get_context_data(self, **kwargs):  # 发送给客户端的context，django通过这个方法实现
-        # 只需要重写这个方法，在其中插入我们要加入的数据，再返回给客户端。
+    def get_context_data(self, **kwargs):
+        '''
+        发送给客户端的context，django通过这个方法实现
+        只需要重写这个方法，在其中插入我们要加入的数据，再返回给客户端。
+        :param kwargs:
+        :return:
+        '''
         context = super().get_context_data(**kwargs)
         paginator = context.get('paginator')
         page = context.get('page_obj')
@@ -73,21 +78,19 @@ class PostDetailView(DetailView):
     template_name = 'blog/detail.html'
     context_object_name = 'post'
 
-    def get(self, request, *args, **kwargs):  # 主方法，get调用其他的辅助方法，整个过程都在get中发生
-        # get等价与detail函数
+    def get(self, request, *args, **kwargs):
+        '''
+        主方法，get调用其他的辅助方法，整个过程都在get中发生
+        get等价与detail函数
+        :param request:
+        :param args:
+        :param kwargs:
+        :return:
+        '''
         response = super().get(request, *args, **kwargs)
         self.object.increase_views()
-        return response  # 传递给浏览器的HTTP响应就是get方法返回的HttpResponse对象
-
-    # def get_object(self, queryset=None):
-    #     post = super().get_object(queryset=None)
-    #     md = markdown.Markdown(extensions=['markdown.extensions.extra',
-    #                                        'markdown.extensions.codehilite',
-    #                                        TocExtension(slugify=slugify)
-    #                                        ])
-    #     post.body = md.convert(post.body)
-    #     post.toc = md.toc
-    #     return post
+        # 传递给浏览器的HTTP响应就是get方法返回的HttpResponse对象
+        return response
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -99,9 +102,6 @@ class PostDetailView(DetailView):
             }
         )
         return context
-
-
-# 总结：共同点：都执行了父类方法，然后对父类方法的返回值进行一些操作，最后返回这个修改后的返回值。
 
 
 class ArchivesView(IndexView):
@@ -119,12 +119,14 @@ class CategoryView(IndexView):
         return super().get_queryset().filter(category=cate)
 
 
-# 首先是需要根据从 URL 中捕获的分类 id（也就是 pk）获取分类，这
-# 和  category 视图函数中的过程是一样的。不过注意一点的是，在类视图中，从
-# URL 捕获的命名组参数值保存在实例的  kwargs 属性（是一个字典）里，非命名组
-# 参数值保存在实例的  args 属性（是一个列表）里。所以我们使
-# 了  self.kwargs.get('pk') 来获取从 URL 捕获的分类 id 值。
 class TagView(ListView):
+    '''
+    首先是需要根据从 URL 中捕获的分类 id（也就是 pk）获取分类，这
+    和  category 视图函数中的过程是一样的。不过注意一点的是，在类视图中，从
+    URL 捕获的命名组参数值保存在实例的  kwargs 属性（是一个字典）里，非命名组
+    参数值保存在实例的  args 属性（是一个列表）里。所以使用
+    了self.kwargs.get('pk') 来获取从 URL 捕获的分类 id 值。
+    '''
     model = Post
     template_name = 'blog/index.html'
     context_object_name = 'post_list'
@@ -141,9 +143,6 @@ def search(request):
         error_msg = '请输入关键词'
         return render(request, 'blog/index.html', {'error_msg': error_msg})
     post_list = Post.objects.filter(Q(title__icontains=q) | Q(body__icontains=q))
-    #     这里  icontains 是查询表达式（Field lookups），我们在之前
-    # 也使用过其他类似的查询表达式，其用法是在模型需要筛选的属性后面跟上两个下划
-    # 线。
     return render(request, 'blog/index.html', {'error_msg': error_msg,
                                                'post_list': post_list
                                                })
