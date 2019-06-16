@@ -7,9 +7,9 @@ __pycache__/
 *.pyc
 *nginx.conf
 media/
+static/
 uwsgi.ini
 whoosh_index/
-static/
 uwsgi_params
 uwsgi.pid
 db.sqlite3
