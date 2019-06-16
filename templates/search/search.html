@@ -54,13 +54,13 @@
 <div>
     {% if page.has_previous %}
     <a href="?q={{ query }}&amp;page={{ page.previous_page_number }}">
-        &laquo; Previous
+        &laquo; 上一页
     </a>
     {% endif %}
     |
     {% if page.has_next %}
     <a href="?q={{ query }}&amp;page={{ page.next_page_number }}">
-        Next &raquo;
+        下一页 &raquo;
     </a>
     {% endif %}
 </div>
