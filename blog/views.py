@@ -119,7 +119,7 @@ class CategoryView(IndexView):
         return super().get_queryset().filter(category=cate)
 
 
-class TagView(ListView):
+class TagView(IndexView):
     '''
     首先是需要根据从 URL 中捕获的分类 id（也就是 pk）获取分类，这
     和  category 视图函数中的过程是一样的。不过注意一点的是，在类视图中，从
