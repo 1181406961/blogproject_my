@@ -45,7 +45,7 @@
                     <div class="collapse navbar-collapse" id="bsexample-navbar-collapse-1">
                         <ul class="nav navbar-nav navbar-right">
                             <li class="cl-effect-11"><a href="{% url 'blog:index' %}" data-hover="首页">首页</a></li>
-                            <li class="cl-effect-11"><a href="https://github.com/1181406961" data-hover="作者的GitHub">作者的GitHub</a></li>
+{#                            <li class="cl-effect-11"><a href="https://github.com/1181406961" data-hover="作者的GitHub">作者的GitHub</a></li>#}
                             {% if user.is_authenticated %}
                                 <li class="cl-effect-11"><a href="{% url 'password_change' %}">修改密码</a></li>
                                 <li class="cl-effect-11"><a href="{% url 'logout' %}">Logout</a></li>
