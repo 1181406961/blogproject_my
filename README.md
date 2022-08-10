@@ -1,2 +1,2 @@
 # blogproject_my
-Django个人博客
+自己基于Django实现的个人博客网站
